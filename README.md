@@ -36,4 +36,9 @@ This is a digital restaurant menu application built with Node.js, Express, and M
 2. the application will be available at "https://localhost:5000"
 
 some of the screenshots from the application are attached below:
-<img src="/images/Screenshot 1.png">
+![Screenshot 1](https://github.com/soni-prakhar07/DigitalMenu/assets/129213897/402e819c-974d-48ca-a793-3f6c64cb4dec)
+![Screenshot 2](https://github.com/soni-prakhar07/DigitalMenu/assets/129213897/5691fed8-440e-4820-a195-bc8e8200c7de)
+![Screenshot 3](https://github.com/soni-prakhar07/DigitalMenu/assets/129213897/f0bdac40-7121-4c7e-bc5e-1116ad5c4e08)
+![Screenshot 4](https://github.com/soni-prakhar07/DigitalMenu/assets/129213897/6f2a73ad-9ed6-43ae-9649-5367e4ac7c7d)
+
+
