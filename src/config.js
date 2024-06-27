@@ -1,27 +1,28 @@
 const mongoose = require('mongoose');
-const connect= mongoose.connect("mongodb://localhost:27017/Login");
+require('dotenv').config();
 
-connect.then(()=>{
-    console.log("Connected to the database");
-})
-.catch(()=>{
-    console.log("error connecting to the database");
-});
+const dbURI = process.env.MONGODB_URI;
 
-//schema
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("Connected to the online database");
+    })
+    .catch((error) => {
+        console.log("Error connecting to the online database:", error);
+    });
+
 const userSchema = new mongoose.Schema({
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    password:{
+    password: {
         type: String,
         required: true
     }
 });
 
-//collection
-const collection = new mongoose.model("users", userSchema);
+const collection = mongoose.model("users", userSchema);
 
 module.exports = collection;
