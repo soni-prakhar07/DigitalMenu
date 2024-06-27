@@ -75,7 +75,6 @@ app.post('/login', async (req, res) => {
 
 //search Functionality
 
-// Assuming you have a collection or an array of your dishes
 const dishes = [
     { id: 'mainCourse_ButterChicken', name: 'Butter Chicken', category: 'Main Course' },
     { id: 'mainCourse_Biryani', name: 'Biryani', category: 'Main Course' },
