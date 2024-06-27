@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logos/OrderEase_transparent-removebg.png" alt="Logo">
+        </div>
+        <a href="#" class="yourProfile">
+            <span class="material-symbols-outlined" alt="profile">
+                person
+            </span>
+        </a>
+    </nav>
+    <form id="searchForm" action="javascript:void(0);">
+        <div class="search">
+            <span class="search-icon material-symbols-outlined">
+                search
+            </span>
+            <input type="search" id="searchInput" class="search-input" placeholder="Search for a food item..">
+        </div>
+    </form>
+    <h1 class="head">What's on your mind?</h1>
+    <div class="category">
+        <div class="catItem" id="mainCourse"><b>Main Course</b></div>
+        <div class="catItem" id="starters"><b>Starters</b></div>
+        <div class="catItem" id="salads"><b>Salads</b></div>
+        <div class="catItem" id="desserts"><b>Desserts</b></div>
+        <div class="catItem" id="beverages"><b>Beverages</b></div>
+        <div class="catItem" id="breads"><b>Breads</b></div>
+    </div>
+    
+    <div id="searchResults" class="food-section" style="display:none;">
+        <button class="back-button">Back</button>
+        <h2>Search Results</h2>
+        <div id="searchResultsContainer"></div>
+    </div>
+    
+    <div id="mainCourseSection" class="food-section">
+        <button class="back-button">Back</button>
+        <h2>Main Course</h2>
+        <div class="food-item">
+            <span id="mainCourse_ButterChicken">Butter Chicken</span>
+            <button class="add-to-cart plus-btn" data-item-id="mainCourse_ButterChicken">+</button>
+            <span class="item-quantity" id="mainCourse_ButterChicken_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="mainCourse_Biryani">Biryani</span>
+            <button class="add-to-cart" data-item-id="mainCourse_Biryani">+</button>
+            <span class="item-quantity" id="mainCourse_Biryani_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="mainCourse_PaneerButterMasala">Paneer Butter Masala</span>
+            <button class="add-to-cart" data-item-id="mainCourse_PaneerButterMasala">+</button>
+            <span class="item-quantity" id="mainCourse_PaneerButterMasala_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="mainCourse_ChickenTikkaMasala">Chicken Tikka Masala</span>
+            <button class="add-to-cart" data-item-id="mainCourse_ChickenTikkaMasala">+</button>
+            <span class="item-quantity" id="maingitCourse_ChickenTikkaMasala_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="mainCourse_PalakPaneer">Palak Paneer</span>
+            <button class="add-to-cart" data-item-id="mainCourse_PalakPaneer">+</button>
+            <span class="item-quantity" id="mainCourse_PalakPaneer_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="mainCourse_FishCurry">Fish Curry</span>
+            <button class="add-to-cart" data-item-id="mainCourse_FishCurry">+</button>
+            <span class="item-quantity" id="mainCourse_FishCurry_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="mainCourse_GrilledChicken">Aloo Gobhi</span>
+            <button class="add-to-cart" data-item-id="mainCourse_GrilledChicken">+</button>
+            <span class="item-quantity" id="mainCourse_GrilledChicken_quantity">0</span>
+        </div>
+    </div>
+    <div id="startersSection" class="food-section">
+        <button class="back-button">Back</button>
+        <h2>Starters</h2>
+        <div class="food-item">
+            <span id="starters_SpringRolls">Spring Rolls</span>
+            <button class="add-to-cart" data-item-id="starters_SpringRolls">+</button>
+            <span class="item-quantity" id="starters_SpringRolls_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="starters_Samosa">Samosa</span>
+            <button class="add-to-cart" data-item-id="starters_Samosa">+</button>
+            <span class="item-quantity" id="starters_Samosa_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="starters_ChickenTikka">Chicken Tikka</span>
+            <button class="add-to-cart" data-item-id="starters_ChickenTikka">+</button>
+            <span class="item-quantity" id="starters_ChickenTikka_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="starters_TandooriPrawns">Tandoori Prawns</span>
+            <button class="add-to-cart" data-item-id="starters_TandooriPrawns">+</button>
+            <span class="item-quantity" id="starters_TandooriPrawns_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="starters_PaniPuri">Pani Puri</span>
+            <button class="add-to-cart" data-item-id="starters_PaniPuri">+</button>
+            <span class="item-quantity" id="starters_PaniPuri_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="starters_DahiKebab">Dahi Kebab</span>
+            <button class="add-to-cart" data-item-id="starters_DahiKebab">+</button>
+            <span class="item-quantity" id="starters_DahiKebab_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="starters_PaneerTikka">Paneer Tikka</span>
+            <button class="add-to-cart" data-item-id="starters_PaneerTikka">+</button>
+            <span class="item-quantity" id="starters_PaneerTikka_quantity">0</span>
+        </div>
+    </div>
+    <div id="saladsSection" class="food-section">
+        <button class="back-button">Back</button>
+        <h2>Salads</h2>
+        <div class="food-item">
+            <span id="salads_CaesarSalad">Caesar Salad</span>
+            <button class="add-to-cart" data-item-id="salads_CaesarSalad">+</button>
+            <span class="item-quantity" id="salads_CaesarSalad_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="salads_GreekSalad">Greek Salad</span>
+            <button class="add-to-cart" data-item-id="salads_GreekSalad">+</button>
+            <span class="item-quantity" id="salads_GreekSalad_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="salads_CapreseSalad">Caprese Salad</span>
+            <button class="add-to-cart" data-item-id="salads_CapreseSalad">+</button>
+            <span class="item-quantity" id="salads_CapreseSalad_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="salads_CobbSalad">Cobb Salad</span>
+            <button class="add-to-cart" data-item-id="salads_CobbSalad">+</button>
+            <span class="item-quantity" id="salads_CobbSalad_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="salads_SpinachSalad">Spinach Salad</span>
+            <button class="add-to-cart" data-item-id="salads_SpinachSalad">+</button>
+            <span class="item-quantity" id="salads_SpinachSalad_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="salads_WaldorfSalad">Waldorf Salad</span>
+            <button class="add-to-cart" data-item-id="salads_WaldorfSalad">+</button>
+            <span class="item-quantity" id="salads_WaldorfSalad_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="salads_NicoiseSalad">Nicoise Salad</span>
+            <button class="add-to-cart" data-item-id="salads_NicoiseSalad">+</button>
+            <span class="item-quantity" id="salads_NicoiseSalad_quantity">0</span>
+        </div>
+    </div>
+    <div id="dessertsSection" class="food-section">
+        <button class="back-button">Back</button>
+        <h2>Desserts</h2>
+        <div class="food-item">
+            <span id="desserts_ApplePie">Apple Pie</span>
+            <button class="add-to-cart" data-item-id="desserts_ApplePie">+</button>
+            <span class="item-quantity" id="desserts_ApplePie_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="desserts_ChocolateCake">Chocolate Cake</span>
+            <button class="add-to-cart" data-item-id="desserts_ChocolateCake">+</button>
+            <span class="item-quantity" id="desserts_ChocolateCake_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="desserts_Cheesecake">Cheesecake</span>
+            <button class="add-to-cart" data-item-id="desserts_Cheesecake">+</button>
+            <span class="item-quantity" id="desserts_Cheesecake_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="desserts_GulabJamun">Gulab Jamun</span>
+            <button class="add-to-cart" data-item-id="desserts_GulabJamun">+</button>
+            <span class="item-quantity" id="desserts_GulabJamun_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="desserts_Bakalava">Bakalava</span>
+            <button class="add-to-cart" data-item-id="desserts_Bakalava">+</button>
+            <span class="item-quantity" id="desserts_Bakalava_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="desserts_PannaCotta">Panna Cotta</span>
+            <button class="add-to-cart" data-item-id="desserts_PannaCotta">+</button>
+            <span class="item-quantity" id="desserts_PannaCotta_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="desserts_Tiramisu">Tiramisu</span>
+            <button class="add-to-cart" data-item-id="desserts_Tiramisu">+</button>
+            <span class="item-quantity" id="desserts_Tiramisu_quantity">0</span>
+        </div>
+    </div>
+    <div id="beveragesSection" class="food-section">
+        <button class="back-button">Back</button>
+        <h2>Beverages</h2>
+        <div class="food-item">
+            <span id="beverages_Coffee">Coffee</span>
+            <button class="add-to-cart" data-item-id="beverages_Coffee">+</button>
+            <span class="item-quantity" id="beverages_Coffee_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="beverages_IcedTea">Iced Tea</span>
+            <button class="add-to-cart" data-item-id="beverages_IcedTea">+</button>
+            <span class="item-quantity" id="beverages_IcedTea_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="beverages_HerbalTea">Herbal Tea</span>
+            <button class="add-to-cart" data-item-id="beverages_HerbalTea">+</button>
+            <span class="item-quantity" id="beverages_HerbalTea_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="beverages_Lassi">Lassi</span>
+            <button class="add-to-cart" data-item-id="beverages_Lassi">+</button>
+            <span class="item-quantity" id="beverages_Lassi_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="beverages_HotChocolate">Hot Chocolate</span>
+            <button class="add-to-cart" data-item-id="beverages_HotChocolate">+</button>
+            <span class="item-quantity" id="beverages_HotChocolate_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="beverages_Frappe">Frappe</span>
+            <button class="add-to-cart" data-item-id="beverages_Frappe">+</button>
+            <span class="item-quantity" id="beverages_Frappe_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="beverages_Kombucha">Kombucha</span>
+            <button class="add-to-cart" data-item-id="beverages_Kombucha">+</button>
+            <span class="item-quantity" id="beverages_Kombucha_quantity">0</span>
+        </div>
+    </div>
+    <div id="breadsSection" class="food-section">
+        <button class="back-button">Back</button>
+        <h2>Breads</h2>
+        <div class="food-item">
+            <span id="breads_Naan">Naan</span>
+            <button class="add-to-cart" data-item-id="breads_Naan">+</button>
+            <span class="item-quantity" id="breads_Naan_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="breads_TawaRoti">Tawa Roti</span>
+            <button class="add-to-cart" data-item-id="breads_TawaRoti">+</button>
+            <span class="item-quantity" id="breads_TawaRoti_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="breads_Paratha">Paratha</span>
+            <button class="add-to-cart" data-item-id="breads_Paratha">+</button>
+            <span class="item-quantity" id="breads_Paratha_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="breads_Puri">Puri</span>
+            <button class="add-to-cart" data-item-id="breads_Puri">+</button>
+            <span class="item-quantity" id="breads_Puri_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="breads_GarlicNaan">Garlic Naan</span>
+            <button class="add-to-cart" data-item-id="breads_GarlicNaan">+</button>
+            <span class="item-quantity" id="breads_GarlicNaan_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="breads_AlooParatha">Aloo Paratha</span>
+            <button class="add-to-cart" data-item-id="breads_AlooParatha">+</button>
+            <span class="item-quantity" id="breads_AlooParatha_quantity">0</span>
+        </div>
+        <div class="food-item">
+            <span id="breads_TandooriRoti">Tandoori Roti</span>
+            <button class="add-to-cart" data-item-id="breads_TandooriRoti">+</button>
+            <span class="item-quantity" id="breads_TandooriRoti_quantity">0</span>
+        </div>
+    </div>
+    
+    <div id="cartSection" class="food-section">
+        <button class="back-button">Back</button>
+        <h2>Cart</h2>
+        <div id="cartItems"></div>
+        <form id="submitForm">
+            <button type="submit" id="submitButton" style="display: none;">Submit Order</button>
+        </form>
+    </div>
+    
+    <button class="cart">
+        <span class="material-symbols-outlined">
+            shopping_cart
+        </span>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const sections = {
+        mainCourse: document.getElementById('mainCourseSection'),
+        starters: document.getElementById('startersSection'),
+        salads: document.getElementById('saladsSection'),
+        desserts: document.getElementById('dessertsSection'),
+        beverages: document.getElementById('beveragesSection'),
+        breads: document.getElementById('breadsSection'),
+        cart: document.getElementById('cartSection'),
+        searchResults: document.getElementById('searchResults')
+    };
+
+    function hideAllSections() {
+        Object.values(sections).forEach(section => section.style.display = 'none');
+    }
+
+    document.querySelectorAll('.catItem').forEach(item => {
+        item.addEventListener('click', function() {
+            hideAllSections();
+            sections[this.id].style.display = 'block';
+        });
+    });
+
+    document.querySelectorAll('.back-button').forEach(button => {
+        button.addEventListener('click', function() {
+            hideAllSections();
+            document.querySelector('.category').style.display = 'flex';
+            document.querySelector('.head').style.display = 'block';
+            document.querySelector('.search').style.display = 'flex';
+        });
+    });
+
+    document.querySelector('.cart').addEventListener('click', function() {
+        hideAllSections();
+        sections.cart.style.display = 'block';
+    });
+
+    const cart = {};
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.getAttribute('data-item-id');
+            const itemName = document.getElementById(itemId).textContent;
+
+            if (!cart[itemName]) {
+                cart[itemName] = 0;
+            }
+            cart[itemName]++;
+
+            const quantityElement = document.getElementById(`${itemId}_quantity`);
+            if (quantityElement) {
+                quantityElement.textContent = cart[itemName];
+            }
+
+            // Update cart display
+            updateCartDisplay();
+        });
+    });
+
+    function updateCartDisplay() {
+        const cartItemsContainer = document.getElementById('cartItems');
+        cartItemsContainer.innerHTML = '';
+
+        Object.entries(cart).forEach(([itemName, quantity]) => {
+            if (quantity > 0) {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('food-item');
+                cartItem.innerHTML = `
+                    <span>${itemName}</span>
+                    <span class="quantity">
+                        <span class="qty">${quantity}</span>
+                    </span>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            }
+        });
+
+        // Show or hide submit button based on cart content
+        const submitButton = document.getElementById('submitButton');
+        submitButton.style.display = (cartItemsContainer.children.length > 0) ? 'block' : 'none';
+    }
+
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const searchResultsSection = sections.searchResults;
+    const searchResultsContainer = document.getElementById('searchResultsContainer');
+
+    searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        if (query) {
+            fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query })
+            })
+            .then(response => response.json())
+            .then(results => {
+                hideAllSections();
+                searchResultsSection.style.display = 'block';
+                searchResultsContainer.innerHTML = results.map(result => `
+                    <div class="food-item" id="${result.id}">
+                        <span>${result.name}</span>
+                        <span class="quantity">
+                            <button class="minus-btn" type="button" onclick="decrementQuantity('${result.id}')">-</button>
+                            <span class="qty">0</span>
+                            <button class="plus-btn" type="button" onclick="incrementQuantity('${result.id}')">+</button>
+                        </span>
+                    </div>
+                `).join('');
+            });
+        }
+    });
+
+    window.incrementQuantity = function(id) {
+        const item = document.getElementById(id);
+        const qtyElement = item.querySelector('.qty');
+        let quantity = parseInt(qtyElement.textContent, 10);
+        qtyElement.textContent = ++quantity;
+
+        // Add to cart
+        if (!cart[id]) {
+            cart[id] = 0;
+        }
+        cart[id]++;
+
+        // Update cart display
+        updateCartDisplay();
+    };
+
+    window.decrementQuantity = function(id) {
+        const item = document.getElementById(id);
+        const qtyElement = item.querySelector('.qty');
+        let quantity = parseInt(qtyElement.textContent, 10);
+        if (quantity > 0) {
+            qtyElement.textContent = --quantity;
+            
+            // Update cart
+            if (cart[id] > 0) {
+                cart[id]--;
+            }
+
+            // Update cart display
+            updateCartDisplay();
+        }
+    };
+});
+
+    </script>
+</body>
+</html>

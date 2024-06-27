@@ -1,0 +1,156 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #365E32;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.logo img {
+    height: 40px;
+    width: 150px;
+}
+
+.yourProfile {
+    text-decoration: none;
+    color: #E7D37F;
+    font-weight: bold;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 28px;
+    background-color: #f8d5d5;
+}
+
+.search-input {
+    font-size: 16px;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.head {
+    text-align: center;
+}
+
+.category {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.catItem {
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    color: #000;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    font-weight: bold;
+    text-align: center;
+}
+
+#mainCourse {
+    background-image: url(/images/mainCourse.jpg);
+}
+#starters {
+    background-image: url(/images/starters.webp);
+}
+#desserts {
+    background-image: url(/images/desserts.jpg);
+}
+#beverages {
+    background-image: url(/images/beverages.jpg);
+}
+#salads {
+    background-image: url(/images/salads.jpg);
+}
+#breads {
+    background-image: url(/images/breads.webp);
+}
+
+.cart {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #0fa18e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-symbols-outlined {
+    font-size: 24px;
+}
+
+/* Food Section Styles */
+.food-section {
+    display: none;
+    padding: 20px;
+    position: absolute;
+    top: 150px;
+    width: 100%;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+.back-button {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.item-quantity {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+/* Cart Section Styles */
+#cartSection {
+    top: 0;
+    padding: 20px;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+#cartItems .food-item {
+    justify-content: space-between;
+}
