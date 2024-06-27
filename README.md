@@ -34,3 +34,6 @@ This is a digital restaurant menu application built with Node.js, Express, and M
         nodemon src/index.js
 
 2. the application will be available at "https://localhost:5000"
+
+some of the screenshots from the application are attached below:
+<img src="/images/Screenshot 1.png">
