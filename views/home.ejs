@@ -283,11 +283,11 @@
         <button class="back-button">Back</button>
         <h2>Cart</h2>
         <div id="cartItems"></div>
-        <form id="submitForm">
-            <input type="number" placeholder="Table No." required>
-            <button type="submit" id="submitButton" style="display: none;">Submit Order</button>
-        </form>
+        <label for="tableNumber">Table Number:</label>
+        <input type="text" id="tableNumber" name="tableNumber" required>
+        <button id="submitOrderButton">Submit Order</button>
     </div>
+    
     
     <button class="cart">
         <span class="material-symbols-outlined">
@@ -296,155 +296,193 @@
     </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const sections = {
-        mainCourse: document.getElementById('mainCourseSection'),
-        starters: document.getElementById('startersSection'),
-        salads: document.getElementById('saladsSection'),
-        desserts: document.getElementById('dessertsSection'),
-        beverages: document.getElementById('beveragesSection'),
-        breads: document.getElementById('breadsSection'),
-        cart: document.getElementById('cartSection'),
-        searchResults: document.getElementById('searchResults')
-    };
-
-    function hideAllSections() {
-        Object.values(sections).forEach(section => section.style.display = 'none');
-    }
-
-    document.querySelectorAll('.catItem').forEach(item => {
-        item.addEventListener('click', function() {
-            hideAllSections();
-            sections[this.id].style.display = 'block';
+            document.addEventListener('DOMContentLoaded', function() {
+        const sections = {
+            mainCourse: document.getElementById('mainCourseSection'),
+            starters: document.getElementById('startersSection'),
+            salads: document.getElementById('saladsSection'),
+            desserts: document.getElementById('dessertsSection'),
+            beverages: document.getElementById('beveragesSection'),
+            breads: document.getElementById('breadsSection'),
+            cart: document.getElementById('cartSection'),
+            searchResults: document.getElementById('searchResults')
+        };
+    
+        function hideAllSections() {
+            Object.values(sections).forEach(section => section.style.display = 'none');
+        }
+    
+        document.querySelectorAll('.catItem').forEach(item => {
+            item.addEventListener('click', function() {
+                hideAllSections();
+                sections[this.id].style.display = 'block';
+            });
         });
-    });
-
-    document.querySelectorAll('.back-button').forEach(button => {
-        button.addEventListener('click', function() {
-            hideAllSections();
-            document.querySelector('.category').style.display = 'flex';
-            document.querySelector('.head').style.display = 'block';
-            document.querySelector('.search').style.display = 'flex';
+    
+        document.querySelectorAll('.back-button').forEach(button => {
+            button.addEventListener('click', function() {
+                hideAllSections();
+                document.querySelector('.category').style.display = 'flex';
+                document.querySelector('.head').style.display = 'block';
+                document.querySelector('.search').style.display = 'flex';
+            });
         });
-    });
-
-    document.querySelector('.cart').addEventListener('click', function() {
-        hideAllSections();
-        sections.cart.style.display = 'block';
-    });
-
-    const cart = {};
-
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', function() {
-            const itemId = this.getAttribute('data-item-id');
-            const itemName = document.getElementById(itemId).textContent;
-
-            if (!cart[itemName]) {
-                cart[itemName] = 0;
+    
+        document.querySelector('.cart').addEventListener('click', function() {
+            hideAllSections();
+            sections.cart.style.display = 'block';
+        });
+    
+        const cart = {};
+    
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-item-id');
+                const itemName = document.getElementById(itemId).textContent;
+            
+                if (!cart[itemId]) {
+                    cart[itemId] = { name: itemName, quantity: 0 };
+                }
+                cart[itemId].quantity++;
+            
+                const quantityElement = document.getElementById(`${itemId}_quantity`);
+                if (quantityElement) {
+                    quantityElement.textContent = cart[itemId].quantity;
+                }
+            
+                // Update cart display
+                updateCartDisplay();
+            });
+        });
+    
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+        
+            Object.entries(cart).forEach(([itemId, itemData]) => {
+                if (itemData.quantity > 0) {
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('food-item');
+                    cartItem.innerHTML = `
+                        <span id="${itemId}">${itemData.name}</span>
+                        <span class="item-quantity">${itemData.quantity}</span>
+                    `;
+                    cartItems.appendChild(cartItem);
+                }
+            });
+        
+            // Show or hide submit button based on cart content
+            const submitButton = document.getElementById('submitOrderButton');
+            submitButton.style.display = (cartItems.children.length > 0) ? 'block' : 'none';
+        }
+    
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const searchResultsSection = sections.searchResults;
+        const searchResultsContainer = document.getElementById('searchResultsContainer');
+    
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                fetch('/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query })
+                })
+                .then(response => response.json())
+                .then(results => {
+                    hideAllSections();
+                    searchResultsSection.style.display = 'block';
+                    searchResultsContainer.innerHTML = results.map(result => `
+                        <div class="food-item" id="${result.id}">
+                            <span>${result.name}</span>
+                            <span class="quantity">
+                                <button class="minus-btn" type="button" onclick="decrementQuantity('${result.id}')">-</button>
+                                <span class="qty">0</span>
+                                <button class="plus-btn" type="button" onclick="incrementQuantity('${result.id}')">+</button>
+                            </span>
+                        </div>
+                    `).join('');
+                });
             }
-            cart[itemName]++;
-
-            const quantityElement = document.getElementById(`${itemId}_quantity`);
-            if (quantityElement) {
-                quantityElement.textContent = cart[itemName];
+        });
+    
+        window.incrementQuantity = function(id) {
+            const item = document.getElementById(id);
+            const qtyElement = item.querySelector('.qty');
+            let quantity = parseInt(qtyElement.textContent, 10);
+            qtyElement.textContent = ++quantity;
+        
+            // Add to cart
+            if (!cart[id]) {
+                cart[id] = { name: item.querySelector('span').textContent, quantity: 0 };
             }
-
+            cart[id].quantity++;
+        
             // Update cart display
             updateCartDisplay();
-        });
-    });
-
-    function updateCartDisplay() {
-        const cartItemsContainer = document.getElementById('cartItems');
-        cartItemsContainer.innerHTML = '';
-
-        Object.entries(cart).forEach(([itemName, quantity]) => {
+        };
+    
+        window.decrementQuantity = function(id) {
+            const item = document.getElementById(id);
+            const qtyElement = item.querySelector('.qty');
+            let quantity = parseInt(qtyElement.textContent, 10);
             if (quantity > 0) {
-                const cartItem = document.createElement('div');
-                cartItem.classList.add('food-item');
-                cartItem.innerHTML = `
-                    <span>${itemName}</span>
-                    <span class="quantity">
-                        <span class="qty">${quantity}</span>
-                    </span>
-                `;
-                cartItemsContainer.appendChild(cartItem);
+                qtyElement.textContent = --quantity;
+                
+                // Update cart
+                if (cart[id] && cart[id].quantity > 0) {
+                    cart[id].quantity--;
+                }
+            
+                // Update cart display
+                updateCartDisplay();
             }
-        });
-
-        // Show or hide submit button based on cart content
-        const submitButton = document.getElementById('submitButton');
-        submitButton.style.display = (cartItemsContainer.children.length > 0) ? 'block' : 'none';
-    }
-
-    const searchForm = document.getElementById('searchForm');
-    const searchInput = document.getElementById('searchInput');
-    const searchResultsSection = sections.searchResults;
-    const searchResultsContainer = document.getElementById('searchResultsContainer');
-
-    searchForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const query = searchInput.value.trim();
-        if (query) {
-            fetch('/search', {
+        };
+    
+        document.getElementById('submitOrderButton').addEventListener('click', () => {
+            const cartItems = Object.entries(cart).map(([id, itemData]) => {
+                return { id, quantity: itemData.quantity };
+            });
+        
+            const tableNumber = document.getElementById('tableNumber').value;
+        
+            if (!tableNumber) {
+                alert("Please enter the table number.");
+                return;
+            }
+        
+            fetch('/submit-order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ query })
+                body: JSON.stringify({ cartItems, tableNumber })
             })
             .then(response => response.json())
-            .then(results => {
-                hideAllSections();
-                searchResultsSection.style.display = 'block';
-                searchResultsContainer.innerHTML = results.map(result => `
-                    <div class="food-item" id="${result.id}">
-                        <span>${result.name}</span>
-                        <span class="quantity">
-                            <button class="minus-btn" type="button" onclick="decrementQuantity('${result.id}')">-</button>
-                            <span class="qty">0</span>
-                            <button class="plus-btn" type="button" onclick="incrementQuantity('${result.id}')">+</button>
-                        </span>
-                    </div>
-                `).join('');
+            .then(data => {
+                if (data.success) {
+                    alert('Order submitted successfully!');
+                    // Clear the cart
+                    Object.keys(cart).forEach(itemId => {
+                        cart[itemId].quantity = 0;
+                    });
+                    updateCartDisplay();
+                    document.getElementById('tableNumber').value = ''; // Clear the table number input
+                } else {
+                    alert('Failed to submit order');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the order');
             });
-        }
+        });
     });
 
-    window.incrementQuantity = function(id) {
-        const item = document.getElementById(id);
-        const qtyElement = item.querySelector('.qty');
-        let quantity = parseInt(qtyElement.textContent, 10);
-        qtyElement.textContent = ++quantity;
-
-        // Add to cart
-        if (!cart[id]) {
-            cart[id] = 0;
-        }
-        cart[id]++;
-
-        // Update cart display
-        updateCartDisplay();
-    };
-
-    window.decrementQuantity = function(id) {
-        const item = document.getElementById(id);
-        const qtyElement = item.querySelector('.qty');
-        let quantity = parseInt(qtyElement.textContent, 10);
-        if (quantity > 0) {
-            qtyElement.textContent = --quantity;
-            
-            // Update cart
-            if (cart[id] > 0) {
-                cart[id]--;
-            }
-
-            // Update cart display
-            updateCartDisplay();
-        }
-    };
-});
 
     </script>
 </body>

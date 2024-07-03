@@ -2,7 +2,11 @@ const express= require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const collection = require('./config');
-require('dotenv').config();
+const mongoose = require('mongoose');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
+console.log('MONGODB_URI:', process.env.MONGODB_URI);
+console.log('PORT:', process.env.PORT);
 
 const app = express();
 
@@ -25,6 +29,7 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+//signup user
 app.post('/signup', async (req, res) => {
     const data={
         email: req.body.email,
@@ -125,6 +130,49 @@ app.post('/search', (req, res) => {
     const results = dishes.filter(dish => dish.name.toLowerCase().includes(query));
     res.json(results);
 });
+
+// define order schema 
+const orderSchema = new mongoose.Schema({
+    items: [
+        {
+            id: String,
+            quantity: Number
+        }
+    ],
+    tableNumber: String,
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+const Order = mongoose.model("Order", orderSchema);
+
+app.post('/submit-order', async (req, res) => {
+    const { cartItems, tableNumber } = req.body;
+
+    console.log('Received order:', { cartItems, tableNumber }); // Debugging line
+
+    if (!cartItems || cartItems.length === 0) {
+        return res.status(400).json({ success: false, message: 'No items in cart' });
+    }
+
+    if (!tableNumber) {
+        return res.status(400).json({ success: false, message: 'Table number is required' });
+    }
+
+    try {
+        const newOrder = new Order({ items: cartItems, tableNumber });
+        await newOrder.save();
+
+        res.json({ success: true, message: 'Order submitted successfully' });
+    } catch (error) {
+        console.error('Error submitting order:', error);
+        res.status(500).json({ success: false, message: 'Error submitting order' });
+    }
+});
+
+
 
 
 
