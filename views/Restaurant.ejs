@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+    <link rel="stylesheet" href="/restaurant-styles.css">
+    
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="/logos/OrderEase_transparent-removebg.png" alt="Logo">
+        </div>
+        <div class="navbar-buttons">
+            <button class="nav-button" id="Feedback-btn">Feedback</button>
+            <button class="nav-button" id="allOrders-btn">All Orders</button>
+            <button class="nav-button">Logout</button>
+        </div>
+    </nav>
+
+    <div class="feedbacks-area">
+        <div>
+            <h1>Feedbacks</h1>
+        </div>
+
+    </div>
+
+    <div class="allOrders">
+        <h1>All Orders</h1>
+    </div>
+    
+    <div class="orders-area">
+        <div class="orderStatus" id="liveOrders">
+            <h1>Live Orders</h1>
+        </div>
+        <div class="orderStatus" id="QueuedOrders">
+            <h1>Queued Orders</h1>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/restaurant-script.js"></script>
+</body>
+</html>

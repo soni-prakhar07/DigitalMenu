@@ -1,7 +1,8 @@
 /* General Styles */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
+    align-items: center;
 }
 
 .navbar {
@@ -18,11 +19,70 @@ body {
     width: 150px;
 }
 
-.yourProfile {
+.feedback-btn {
     text-decoration: none;
     color: #E7D37F;
     font-weight: bold;
+    background-color: #365E32;
+    text-align: center;
+    padding: 2px 13px;
 }
+
+.feedback:hover {
+    background-color: #5b825780;
+}
+
+.feedback-form {
+    display: none;
+    position: fixed;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    right: 3px;
+    transition: ease-in-out 0.3s;
+}
+
+.feedback-form h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background-color: #0056b3;
+}   
 
 .search {
     display: flex;
@@ -112,13 +172,16 @@ body {
     display: none;
     padding: 20px;
     position: absolute;
-    top: 150px;
-    width: 100%;
+    top: 110px;
+    width: 97.38%;
     background-color: #f9f9f9;
     overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
 }
 
-.back-button {
+.food-section .back-button {
     margin-bottom: 20px;
     padding: 10px;
     background-color: #d9534f;
@@ -126,17 +189,20 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 0;
+    margin-right: auto;
 }
 
 .food-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: normal;
     align-items: center;
     padding: 10px;
-    margin: 10px 0;
+    margin: 10px 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
+    width: 50vw;
 }
 
 .item-quantity {
@@ -145,16 +211,64 @@ body {
 }
 
 /* Cart Section Styles */
+
 #cartSection {
     top: 0;
     padding: 20px;
-    height: 100vh;
+    min-height: 200vh;
     background-color: #f9f9f9;
+    position: absolute;
+    align-items: center;
+    display: none;
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+    border: #000 15px double;
+    width: 100vw;
+    
+}
+
+#cartSection .back-button {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.line{
+    border: 2px solid #000000;
+    width: 100vw;
+}
+
+#cartSection h1{
+    font-size: 50px;
+}
+
+#cartSection label{
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #cartItems .food-item {
     justify-content: space-between;
 }
+
+#tableNumber{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+#submitOrderButton {
+    margin-top: 0px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+
+}
+
 .offers {
     background-image: url(/images/offer.png);
     background-size: cover;
@@ -163,4 +277,15 @@ body {
     margin: 2px;
     border-radius: 5px;
     height: 100vh;
+}
+
+.add-to-cart {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 0;
+    margin-left: auto;
 }

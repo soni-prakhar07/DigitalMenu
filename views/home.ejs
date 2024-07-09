@@ -12,11 +12,10 @@
         <div class="logo">
             <img src="logos/OrderEase_transparent-removebg.png" alt="Logo">
         </div>
-        <a href="#" class="yourProfile">
-            <span class="material-symbols-outlined" alt="profile">
-                person
-            </span>
-        </a>
+        <button class="feedback-btn" >
+            <span class="material-symbols-outlined">comment</span>
+        </button>
+
     </nav>
     <form id="searchForm" action="javascript:void(0);">
         <div class="search">
@@ -26,6 +25,28 @@
             <input type="search" id="searchInput" class="search-input" placeholder="Search for a food item..">
         </div>
     </form>
+
+    <div class="feedback-form">
+        <h1>Feedback Form</h1>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Feedback</label>
+                <textarea id="feedback" name="feedback" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
     <div class="offers">
     </div>
     <h1 class="head">What's on your mind?</h1>
@@ -46,7 +67,9 @@
     
     <div id="mainCourseSection" class="food-section">
         <button class="back-button">Back</button>
+        <hr class="line">
         <h2>Main Course</h2>
+        <hr class="line">
         <div class="food-item">
             <span id="mainCourse_ButterChicken">Butter Chicken</span>
             <button class="add-to-cart plus-btn" data-item-id="mainCourse_ButterChicken">+</button>
@@ -65,7 +88,7 @@
         <div class="food-item">
             <span id="mainCourse_ChickenTikkaMasala">Chicken Tikka Masala</span>
             <button class="add-to-cart" data-item-id="mainCourse_ChickenTikkaMasala">+</button>
-            <span class="item-quantity" id="maingitCourse_ChickenTikkaMasala_quantity">0</span>
+            <span class="item-quantity" id="mainCourse_ChickenTikkaMasala_quantity">0</span>
         </div>
         <div class="food-item">
             <span id="mainCourse_PalakPaneer">Palak Paneer</span>
@@ -85,7 +108,9 @@
     </div>
     <div id="startersSection" class="food-section">
         <button class="back-button">Back</button>
+        <hr class="line">
         <h2>Starters</h2>
+        <hr class="line">
         <div class="food-item">
             <span id="starters_SpringRolls">Spring Rolls</span>
             <button class="add-to-cart" data-item-id="starters_SpringRolls">+</button>
@@ -124,7 +149,9 @@
     </div>
     <div id="saladsSection" class="food-section">
         <button class="back-button">Back</button>
+        <hr class="line">
         <h2>Salads</h2>
+        <hr class="line">
         <div class="food-item">
             <span id="salads_CaesarSalad">Caesar Salad</span>
             <button class="add-to-cart" data-item-id="salads_CaesarSalad">+</button>
@@ -163,7 +190,9 @@
     </div>
     <div id="dessertsSection" class="food-section">
         <button class="back-button">Back</button>
+        <hr class="line">
         <h2>Desserts</h2>
+        <hr class="line">
         <div class="food-item">
             <span id="desserts_ApplePie">Apple Pie</span>
             <button class="add-to-cart" data-item-id="desserts_ApplePie">+</button>
@@ -202,7 +231,9 @@
     </div>
     <div id="beveragesSection" class="food-section">
         <button class="back-button">Back</button>
+        <hr class="line">
         <h2>Beverages</h2>
+        <hr class="line">
         <div class="food-item">
             <span id="beverages_Coffee">Coffee</span>
             <button class="add-to-cart" data-item-id="beverages_Coffee">+</button>
@@ -241,7 +272,9 @@
     </div>
     <div id="breadsSection" class="food-section">
         <button class="back-button">Back</button>
+        <hr class="line">
         <h2>Breads</h2>
+        <hr class="line">
         <div class="food-item">
             <span id="breads_Naan">Naan</span>
             <button class="add-to-cart" data-item-id="breads_Naan">+</button>
@@ -281,10 +314,12 @@
     
     <div id="cartSection" class="food-section">
         <button class="back-button">Back</button>
-        <h2>Cart</h2>
+        <hr class="line">
+        <h1>Cart</h1>
+        <hr class="line">
         <div id="cartItems"></div>
         <label for="tableNumber">Table Number:</label>
-        <input type="text" id="tableNumber" name="tableNumber" required>
+        <input type="number" min="01" id="tableNumber" name="tableNumber" required>
         <button id="submitOrderButton">Submit Order</button>
     </div>
     
@@ -295,195 +330,6 @@
         </span>
     </button>
 
-    <script>
-            document.addEventListener('DOMContentLoaded', function() {
-        const sections = {
-            mainCourse: document.getElementById('mainCourseSection'),
-            starters: document.getElementById('startersSection'),
-            salads: document.getElementById('saladsSection'),
-            desserts: document.getElementById('dessertsSection'),
-            beverages: document.getElementById('beveragesSection'),
-            breads: document.getElementById('breadsSection'),
-            cart: document.getElementById('cartSection'),
-            searchResults: document.getElementById('searchResults')
-        };
-    
-        function hideAllSections() {
-            Object.values(sections).forEach(section => section.style.display = 'none');
-        }
-    
-        document.querySelectorAll('.catItem').forEach(item => {
-            item.addEventListener('click', function() {
-                hideAllSections();
-                sections[this.id].style.display = 'block';
-            });
-        });
-    
-        document.querySelectorAll('.back-button').forEach(button => {
-            button.addEventListener('click', function() {
-                hideAllSections();
-                document.querySelector('.category').style.display = 'flex';
-                document.querySelector('.head').style.display = 'block';
-                document.querySelector('.search').style.display = 'flex';
-            });
-        });
-    
-        document.querySelector('.cart').addEventListener('click', function() {
-            hideAllSections();
-            sections.cart.style.display = 'block';
-        });
-    
-        const cart = {};
-    
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.getAttribute('data-item-id');
-                const itemName = document.getElementById(itemId).textContent;
-            
-                if (!cart[itemId]) {
-                    cart[itemId] = { name: itemName, quantity: 0 };
-                }
-                cart[itemId].quantity++;
-            
-                const quantityElement = document.getElementById(`${itemId}_quantity`);
-                if (quantityElement) {
-                    quantityElement.textContent = cart[itemId].quantity;
-                }
-            
-                // Update cart display
-                updateCartDisplay();
-            });
-        });
-    
-        function updateCartDisplay() {
-            const cartItems = document.getElementById('cartItems');
-            cartItems.innerHTML = '';
-        
-            Object.entries(cart).forEach(([itemId, itemData]) => {
-                if (itemData.quantity > 0) {
-                    const cartItem = document.createElement('div');
-                    cartItem.classList.add('food-item');
-                    cartItem.innerHTML = `
-                        <span id="${itemId}">${itemData.name}</span>
-                        <span class="item-quantity">${itemData.quantity}</span>
-                    `;
-                    cartItems.appendChild(cartItem);
-                }
-            });
-        
-            // Show or hide submit button based on cart content
-            const submitButton = document.getElementById('submitOrderButton');
-            submitButton.style.display = (cartItems.children.length > 0) ? 'block' : 'none';
-        }
-    
-        const searchForm = document.getElementById('searchForm');
-        const searchInput = document.getElementById('searchInput');
-        const searchResultsSection = sections.searchResults;
-        const searchResultsContainer = document.getElementById('searchResultsContainer');
-    
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = searchInput.value.trim();
-            if (query) {
-                fetch('/search', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ query })
-                })
-                .then(response => response.json())
-                .then(results => {
-                    hideAllSections();
-                    searchResultsSection.style.display = 'block';
-                    searchResultsContainer.innerHTML = results.map(result => `
-                        <div class="food-item" id="${result.id}">
-                            <span>${result.name}</span>
-                            <span class="quantity">
-                                <button class="minus-btn" type="button" onclick="decrementQuantity('${result.id}')">-</button>
-                                <span class="qty">0</span>
-                                <button class="plus-btn" type="button" onclick="incrementQuantity('${result.id}')">+</button>
-                            </span>
-                        </div>
-                    `).join('');
-                });
-            }
-        });
-    
-        window.incrementQuantity = function(id) {
-            const item = document.getElementById(id);
-            const qtyElement = item.querySelector('.qty');
-            let quantity = parseInt(qtyElement.textContent, 10);
-            qtyElement.textContent = ++quantity;
-        
-            // Add to cart
-            if (!cart[id]) {
-                cart[id] = { name: item.querySelector('span').textContent, quantity: 0 };
-            }
-            cart[id].quantity++;
-        
-            // Update cart display
-            updateCartDisplay();
-        };
-    
-        window.decrementQuantity = function(id) {
-            const item = document.getElementById(id);
-            const qtyElement = item.querySelector('.qty');
-            let quantity = parseInt(qtyElement.textContent, 10);
-            if (quantity > 0) {
-                qtyElement.textContent = --quantity;
-                
-                // Update cart
-                if (cart[id] && cart[id].quantity > 0) {
-                    cart[id].quantity--;
-                }
-            
-                // Update cart display
-                updateCartDisplay();
-            }
-        };
-    
-        document.getElementById('submitOrderButton').addEventListener('click', () => {
-            const cartItems = Object.entries(cart).map(([id, itemData]) => {
-                return { id, quantity: itemData.quantity };
-            });
-        
-            const tableNumber = document.getElementById('tableNumber').value;
-        
-            if (!tableNumber) {
-                alert("Please enter the table number.");
-                return;
-            }
-        
-            fetch('/submit-order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ cartItems, tableNumber })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Order submitted successfully!');
-                    // Clear the cart
-                    Object.keys(cart).forEach(itemId => {
-                        cart[itemId].quantity = 0;
-                    });
-                    updateCartDisplay();
-                    document.getElementById('tableNumber').value = ''; // Clear the table number input
-                } else {
-                    alert('Failed to submit order');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while submitting the order');
-            });
-        });
-    });
-
-
-    </script>
+    <script src="/script.js"></script>
 </body>
 </html>
