@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Load Orders
-    fetch('/api/orders')
+    fetch('https://digitalmenusrc.onrender.com/api/orders')
         .then(response => response.json())
         .then(orders => {
             loadOrders(orders);
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
      // Listen for new orders
      socket.on('newOrder', (newOrder) => {
         addOrderToLiveOrders(newOrder);
-        fetch('/api/orders')
+        fetch('https://digitalmenusrc.onrender.com/api/orders')
             .then(response => response.json())
             .then(orders => {
                 loadOrders(orders);
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     //Load Feedbacks
-    fetch('/api/feedbacks')
+    fetch('https://digitalmenusrc.onrender.com/api/feedbacks')
     .then(response => response.json())
     .then(feedbacks => {
         const feedbacksArea = document.querySelector('.feedbacks-area');

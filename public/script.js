@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //logout
 document.getElementById('logoutButton').addEventListener('click', () => {
-    fetch('/logout', {
+    fetch('https://digitalmenusrc.onrender.com/logout', {
         method: 'GET',
         credentials: 'same-origin'
     })
@@ -57,7 +57,7 @@ document.getElementById('logoutButton').addEventListener('click', () => {
         };
 
         try {
-            const response = await fetch('/submit-feedback', {
+            const response = await fetch('https://digitalmenusrc.onrender.com/submit-feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -155,7 +155,7 @@ document.getElementById('logoutButton').addEventListener('click', () => {
         e.preventDefault();
         const query = searchInput.value.trim();
         if (query) {
-            fetch('/search', {
+            fetch('https://digitalmenusrc.onrender.com/search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -225,7 +225,7 @@ document.getElementById('logoutButton').addEventListener('click', () => {
             return;
         }
     
-        fetch('/submit-order', {
+        fetch('https://digitalmenusrc.onrender.com/submit-order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
