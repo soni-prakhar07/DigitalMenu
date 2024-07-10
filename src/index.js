@@ -6,27 +6,61 @@
     const socketIo = require('socket.io');
     const http = require('http');
     const nodemailer = require('nodemailer');
-    require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+    require('dotenv').config();
+    const session = require('express-session');
+    const MongoStore = require('connect-mongo');
+
 
     const app = express();
     const server = http.createServer(app);
     const io = socketIo(server);
 
-    //Middleware Setup
+//Middleware Setup
     app.use(express.json());
     app.use(express.urlencoded({extended: false}));
     app.set('view engine', 'ejs');
     app.use(express.static("public"));
 
+    app.use(session({
+        secret: 'OrderEase@12345',
+        resave: false,
+        saveUninitialized: false,
+        store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+        cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
+    }));
+
     console.log('MONGODB_URI:', process.env.MONGODB_URI);
     console.log('PORT:', process.env.PORT);
 
-    //routes
-    app.get('/', (req, res) => {res.render('login');});
-    app.get('/signup', (req, res) => {res.render('signup');});
-    app.get('/restaurant', (req, res) => {res.render('Restaurant');});
+// Authentication Middleware
+    function isAuthenticated(req, res, next) {
+        if (req.session.userId) {
+            return next();
+        } else {
+            res.redirect('/');
+        }
+    }
 
-    //signup user
+
+//routes
+    app.get('/', (req, res) => { res.render('login'); });
+    app.get('/signup', (req, res) => { res.render('signup'); });
+    app.get('/home', isAuthenticated, (req, res) => { res.render('home'); });
+    app.get('/restaurant',  (req, res) => { res.render('Restaurant'); });
+    
+//logout
+    app.get('/logout', (req, res) => {
+        req.session.destroy((err) => {
+            if (err) {
+                return res.redirect('/home');
+            }
+            res.clearCookie('connect.sid');
+            res.redirect('/');
+        });
+    });
+
+
+//signup user
     app.post('/signup', async (req, res) => {
         const data={
             email: req.body.email,
@@ -54,26 +88,26 @@
     });
 
 
-    //login user
+//login user
     app.post('/login', async (req, res) => {
-        try{
-            const check= await collection.findOne({email: req.body.email}); 
-            if(!check){
+        try {
+            const check = await collection.findOne({ email: req.body.email }); 
+            if (!check) {
                 return res.send('User does not exist');
             }
 
-            const isPasswordMatch= await bcrypt.compare(req.body.password, check.password);
-            if(isPasswordMatch){
-                res.render('home');
-            }else{
-                return req.send("wrong password");
+            const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
+            if (isPasswordMatch) {
+                req.session.userId = check._id;
+                res.redirect('/home');
+            } else {
+                return res.send("Wrong password");
             }
-
-        }catch{
-            res.send("wrong details")
+        } catch (error) {
+            res.send("Wrong details");
         }
-
-    }); 
+    });
+     
 
     //search Functionality
 
@@ -172,7 +206,7 @@
         service: 'gmail',   
         auth: {
             user: 'soni.prakhar.004@gmail.com',
-            pass: 'kgqy awwi hmus sybd'
+            pass: process.env.pass
         }
     });
 
@@ -196,7 +230,7 @@
             await newFeedback.save();
             
             const mailOptions = {
-                from: 'soni.prakhar.004@gmail.com',
+                from: 'OrderEase@gmail.com',
                 to: email,
                 subject: 'Thank you for your feedback',
                 text: `Dear ${name},\n\nThank you for your feedback. We appreciate your effort to help us improve.\n\nBest regards,\nOrderEase`
@@ -243,7 +277,15 @@
         }
     });
 
-
+    
+    io.on('connection', (socket) => {
+        console.log('A user connected');
+        
+        socket.on('disconnect', () => {
+            console.log('A user disconnected');
+        });
+    });
+    
     const port = process.env.PORT || 5000;
     server.listen(port, () => {
         console.log(`Server is running on port ${port}`);

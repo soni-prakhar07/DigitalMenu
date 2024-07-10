@@ -117,11 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
      // Listen for new orders
      socket.on('newOrder', (newOrder) => {
         addOrderToLiveOrders(newOrder);
-    });
-
-
-    // Listen for new orders
-    socket.on('newOrder', (newOrder) => {
         fetch('/api/orders')
             .then(response => response.json())
             .then(orders => {
@@ -131,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error fetching orders:', error);
                 alert('Failed to load orders.');
             });
-    });
+    })
 
     //Load Feedbacks
     fetch('/api/feedbacks')
